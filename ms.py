@@ -36,4 +36,4 @@ e2.nextval = e3
 
 list.AtEnd("Thu")
 
-# list.listprint()
+list.listprint()
