@@ -1,39 +1,38 @@
 class Node:
-    def __init__(self, dataval=None):
-        self.dataval = dataval
-        self.nextval = None
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
 
 class SLinkedList:
     def __init__(self):
-        self.headval = None
+        self.head = None
 
-# Function to add newnode
-    def AtEnd(self, newdata):
-        NewNode = Node(newdata)
-        if self.headval is None:
-            self.headval = NewNode
+    def Atbegining(self, data_in):
+        NewNode = Node(data_in)
+        NewNode.next = self.head
+        self.head = NewNode
+    
+    def Atending(self, data_in):
+        NewNode = Node(data_in):
+        if self.head is None:
+            self.head = NewNode
             return
-        laste = self.headval
-        while(laste.nextval):
-            laste = laste.nextval
-        laste.nextval=NewNode
+        laste = self.head
+        while laste.next:
+            laste = laste.next
+        laste.next = NewNode
+        
+    def Atafternode(self, middle_node, data_in):
+        if middle_node is None:
+            print("Don't have %s in this nodelist!" % middle_node)
+            return 
+        NewNode = Node(data_in)
+        NewNode.next = middle_node.next
+        middle_node.next = NewNode 
+    def LListprint(self):
+        printval = self.head
+        while (printval):
+            print(printval.data),
+            printval = printval.next
 
-# Print the linked list
-    def listprint(self):
-        printval = self.headval
-        while printval is not None:
-            print (printval.dataval)
-            printval = printval.nextval
 
-
-list = SLinkedList()
-list.headval = Node("Mon")
-e2 = Node("Tue")
-e3 = Node("Wed")
-
-list.headval.nextval = e2
-e2.nextval = e3
-
-list.AtEnd("Thu")
-
-list.listprint()
