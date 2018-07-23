@@ -11,6 +11,8 @@ import time
 import random
 import threading
 
+list1 = ['XWP', '600000', 32.32, 12300]
+
 class Trader(object):
     def __init__(self, username):
         self.username = username
@@ -18,6 +20,8 @@ class Trader(object):
         print(f'|{time.time() % 60:6.3f}| {self.username}买入{symbol}: {price} x {lot}')
         time.sleep(random.random() * 0.03 + 0.02)
         return True if random.random() < 0.05 else False
+    def ok(self):
+        return True
 
 class Mythread(threading.Thread):
     def __init__(self, func, args):
@@ -26,24 +30,38 @@ class Mythread(threading.Thread):
         self.args = args
     def run(self):
         self.func(*self.args)
- 
-def successed(username, symbol, price, lot):
-    while Trader(username).buy(symbol, price, lot):
-        return True
 
-qd = successed
-list1 = ['XWP', '600000', 32.32, 12300]
+def send(username, symbol, price, lot):
+    Trader(username).buy(symbol, price, lot)
+    return
+
+qd = send
 
 def one_thread(func, args):
+    t = Mythread(func, args)
+    t.start()
+    return
+
+def timer(n):
+    return (time.sleep(n))
+
+def just_run(func, args):
+    one_thread(func, args)
+    return
+
+if __name__ == '__main__':
+    t = time.time()
     while True:
-        t = Mythread(qd, list1)
-        t.start()
-        break
-
-interval = 0.01
-
-while True:
-    time.sleep(0.002)
-    print(time.time() % 60)
-    one_thread(qd, list1)
-
+        if time.time() -t < 3:
+            timer(1)
+            continue
+        elif time.time() -t <4:
+            timer(0.2)
+            continue
+        elif time.time() -t <5:
+            timer(0.02)
+            continue
+        just_run(qd, list1)
+        if time.time() -t > 6:
+            print('++++++++++++++++++++++++++++++++++')
+            break
